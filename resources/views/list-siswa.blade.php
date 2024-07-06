@@ -3,7 +3,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-2">
+        <div class="py-2 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-2">
             <a href="{{ route('show') }}">    
                 <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                     <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ $title . ' ' . $school }}</h2>

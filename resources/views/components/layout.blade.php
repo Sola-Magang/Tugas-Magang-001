@@ -124,7 +124,7 @@
             </div>
         </nav> --}}
   
-        <header class="flex items-center bg-gray-300 shadow">
+        <header class="overflow-hidden w-screen fixed flex items-center bg-gray-300 shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-2 lg:px-4">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
             </div>
@@ -148,7 +148,7 @@
               </div>
         </header>
         <main>
-            <div class="mx-auto max-w-14xl px-4 py-2 sm:px-6 lg:px-4">
+            <div class="mx-auto max-w-14xl px-4 lg:py-10 py-24 sm:px-6 lg:px-4">
                 {{ $slot }}
             </div>
         </main>

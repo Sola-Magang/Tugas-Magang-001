@@ -10,14 +10,22 @@ use Illuminate\Http\Request;
 class profileDataController extends Controller
 {
     function show() {
-        return view('list-siswa', ['title' => 'Daftar Siswa', 'school' => 'SMK Harapan', 'students' => profileData::filter(request(['search','category']))->get()
-    ]);
+        return view(
+            'list-siswa',
+            ['title' => 'Daftar Siswa', 
+            'school' => 'SMK Harapan', 
+            'students' => profileData::with('pos')->filter(request(['search','category']))->get()]
+        );
     }
 
     function add()
     {
         $category = category::all();
-        return view('add-data',compact('category'),['title'=>'Tambah Data']);
+        return view(
+            'add-data',
+            compact('category'),
+            ['title'=>'Tambah Data']
+        );
     }
 
     function submit(Request $pd)
@@ -39,7 +47,11 @@ class profileDataController extends Controller
     function edit($slug){
         $category = category::all();
         $data = profileData::where('slug', '=', $slug)->first();
-        return view('edit', compact('data','category'), ['title'=>'Edit']);
+        return view(
+            'edit', 
+            compact('data','category'), 
+            ['title'=>'Edit']
+        );
     }
 
     function update(Request $pd, $slug){
@@ -65,7 +77,12 @@ class profileDataController extends Controller
     }
 
     function categor(category $category){
-        return view('list-siswa', ['title' => 'Daftar Siswa', 'school' => 'SMK Harapan', 'students' => $category->profdat]);
+        return view(
+            'list-siswa', 
+            ['title' => 'Daftar Siswa',
+            'school' => 'SMK Harapan',
+            'students' => $category->profdat->load('pos')]
+        );
     }
 
 }

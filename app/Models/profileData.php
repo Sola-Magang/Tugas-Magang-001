@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+// use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class profileData extends Model
 {
@@ -18,6 +19,11 @@ class profileData extends Model
             $fil['search'] ?? false,
             fn($query, $search) =>
             $query->where('name','like','%'.$search.'%')
+            ->orWhere('school','like','%'.$search.'%')
+            ->orWhere('place_birth','like','%'.$search.'%')
+            ->orWhere('date_birth','like','%'.$search.'%')
+            // ->orWhere(DB::raw('CAST(information AS VarChar)'),'like','%'.$search.'%')
+            
         );
         $query->when(
             $fil['category'] ?? false,

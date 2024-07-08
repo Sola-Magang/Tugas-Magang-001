@@ -33,56 +33,65 @@
             <div class="grid place-content-end">
             </div>
             
-            <div class="grid gap-4 py-4 px-2 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
-                @forelse ($students as $student)
-                    <article class="grid p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-between items-center mb-5 text-gray-500">
-                            <a href="/?category={{ $student->pos->slug }}">
-                                <span class="bg-{{ $student->pos->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
-                                    {{ $student->pos->pos_name }}
-                                </span>
-                            </a>
-                            <span class="text-sm">{{ $student->created_at->diffForHumans() }}</span>
-                        </div>
-                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">Data siswa </a></h2>
-                        <table>
-                            <tr>
-                                <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Nama</td>
-                                <td>:</td>
-                                <td>{{ $student['name'] }}</td>
-                            </tr>
-                            <tr>
-                                <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Tempat Tanggal Lahir</td>
-                                <td>:</td>
-                                <td>{{ $student['place_birth'] }}, {{ Carbon::parse($student['date_birth'])->format('j F Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Sekolah</td>
-                                <td>:</td>
-                                <td>{{ $student['school'] }}</td>
-                            </tr>
-                            <tr>
-                                <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Keterangan</td>
-                                <td>:</td>
-                                <td class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ $student['information'] }}</td>
-                            </tr>
-                        </table>
-                        <div class="py-8 flex justify-between items-center">
-                            <form action="{{ route('pd.delete',$student->slug) }}" method="post">
-                                @csrf
-                                <button href="#" class="text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
-                                Delete
-                                </button>
-                            </form>
-                            <a href="{{ route('pd.edit', $student->slug) }}" class="text-white bg-gray-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
-                                Edit
-                            </a>
-                        </div>
-                    </article>
-                @empty
-                    <p>No Data Found</p>
-                @endforelse
-            </div>  
+            <form action="{{ route('pd.deleteMO') }}" method="post">
+                @csrf
+                <input type="submit" value="Delete Selected" class="text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
+                <input type="hidden" name="list[]" value="no-data">
+                {{-- <div>{{ $message }}</div> --}}
+                <div class="grid gap-4 py-4 px-2 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
+
+                    @forelse ($students as $student)
+                        <article class="grid p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                            <input type="checkbox" name="list[]" id="list" value="{{ $student->slug }}">
+                            
+                            <div class="flex justify-between items-center mb-5 text-gray-500">
+                                <a href="/?category={{ $student->pos->slug }}">
+                                    <span class="bg-{{ $student->pos->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+                                        {{ $student->pos->pos_name }}
+                                    </span>
+                                </a>
+                                <span class="text-sm">{{ $student->created_at->diffForHumans() }}</span>
+                            </div>
+                            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">Data siswa </a></h2>
+                            <table>
+                                <tr>
+                                    <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Nama</td>
+                                    <td>:</td>
+                                    <td>{{ $student['name'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Tempat Tanggal Lahir</td>
+                                    <td>:</td>
+                                    <td>{{ $student['place_birth'] }}, {{ Carbon::parse($student['date_birth'])->format('j F Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Sekolah</td>
+                                    <td>:</td>
+                                    <td>{{ $student['school'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Keterangan</td>
+                                    <td>:</td>
+                                    <td class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ $student['information'] }}</td>
+                                </tr>
+                            </table>
+                            <div class="py-8 flex justify-between items-center">
+                                <form action="{{ route('pd.delete',$student->slug) }}" method="post">
+                                    @csrf
+                                    <button href="#" class="text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors" name="list[]" value="{{ $student->slug }}">
+                                    Delete
+                                    </button>
+                                </form>
+                                <a href="{{ route('pd.edit', $student->slug) }}" class="text-white bg-gray-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
+                                    Edit
+                                </a>
+                            </div>
+                        </article>
+                    @empty
+                        <p>No Data Found</p>
+                    @endforelse
+                </div>  
+            </form>
             <p>{{ count($students) }} data found</p>
         </div>
       </section>

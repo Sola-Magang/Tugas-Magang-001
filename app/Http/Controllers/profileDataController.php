@@ -13,7 +13,8 @@ class profileDataController extends Controller
         return view(
             'list-siswa',
             ['title' => 'Daftar Siswa', 
-            'school' => 'SMK Harapan', 
+            'school' => 'SMK Harapan',
+            // 'message' => $mess, 
             'students' => profileData::with('pos')->filter(request(['search','category']))->get()]
         );
     }
@@ -73,7 +74,7 @@ class profileDataController extends Controller
     {
         $data = profileData::where('slug','=',$slug)->first();
         $data->delete();
-        return redirect()->route('tampil');
+        return redirect()->route('show');
     }
 
     function categor(category $category){
@@ -83,6 +84,25 @@ class profileDataController extends Controller
             'school' => 'SMK Harapan',
             'students' => $category->profdat->load('pos')]
         );
+    }
+
+    function deleteMO(Request $list){
+        $mess = "";
+        // dd($list);
+        if ($list != null) {
+            $mess = count($list->list);
+            foreach ($list->list as $data) {
+                if ($data == "no-data") {
+                    
+                }else {
+                    $query = profileData::where('slug','=',$data)->first();
+                    $query->delete();
+                }
+            }
+        }else {
+            $mess = "no data selected";
+        }
+        return redirect()->route('show');
     }
 
 }

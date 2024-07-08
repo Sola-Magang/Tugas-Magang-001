@@ -21,3 +21,9 @@ Route::post('/update/{slug}', [profileDataController::class, 'update'])->name('p
 Route::post('/delete/{slug}', [profileDataController::class, 'delete'])->name('pd.delete');
 
 Route::post('/deleteMO', [profileDataController::class, 'deleteMO'])->name('pd.deleteMO');
+
+Route::get('/login', [profileDataController::class, 'loginPage'])->name('pg.login');
+
+Route::post('/login',[profileDataController::class, 'login'])->name('login');
+
+Route::post('/logout',[profileDataController::class, 'logout'])->name('logout');

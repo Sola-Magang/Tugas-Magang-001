@@ -10,7 +10,6 @@
 
 </head>
 <body>
-    
 </body>
     <div class="min-h-full">
         {{-- <nav class="bg-gray-800">
@@ -129,7 +128,11 @@
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
             </div>
 
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-2 lg:px-4">
+            <div class="grid grid-cols-2 place-items-end mx-auto max-w-7xl px-4 py-6 sm:px-2 lg:px-4">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <input type="submit" value="Log Out" class="text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
+                </form>
                 <form class="flex items-center">
                     @if (request('category'))<input type="hidden" value="{{ request('category') }}" name="category">@endif
                   <label for="search" class="sr-only">Search</label>

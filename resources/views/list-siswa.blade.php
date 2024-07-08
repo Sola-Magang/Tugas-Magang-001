@@ -9,14 +9,13 @@
     </style> --}}
     <section class="bg-white dark:bg-gray-900">
         <div class="py-2 px-4 mx-auto max-w-screen-2xl lg:py-16 lg:px-2">
-
             <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
                 <div class="lg:block md:hidden max-w-36">
-                    
+                    {{ Session::get('mess') }}
                 </div>
                     <a href="{{ route('show') }}">    
                         <div class="text-center lg:mb-8 mb-8 mx-auto max-w-screen-sm" >
-                            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ $title . ' ' . $school }}</h2>
+                            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ $title . ' ' . $user->name }}</h2>
                         </div> 
                     </a>
                 <div class="max-w-36 md:justify-self-end justify-self-center my-auto">
@@ -32,7 +31,6 @@
             
             <div class="grid place-content-end">
             </div>
-            
             <form action="{{ route('pd.deleteMO') }}" method="post">
                 @csrf
                 <input type="submit" value="Delete Selected" class="text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">

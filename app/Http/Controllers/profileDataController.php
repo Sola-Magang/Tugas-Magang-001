@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\category;
 use App\Models\profileData;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 
 class profileDataController extends Controller
 {
-    function show() {
+    function show(User $data) {
+        // if (Session::get('status') != 'login' ) {
+        //     return redirect()->route('login');
+        // }
+
+
+        $data = User::findE(Session::get('user'));
+        // $data = Session::get('user');
+        // dd($data);
         return view(
             'list-siswa',
             ['title' => 'Daftar Siswa', 
             'school' => 'SMK Harapan',
-            // 'message' => $mess, 
+            'user' => $data, 
             'students' => profileData::with('pos')->filter(request(['search','category']))->get()]
         );
     }
@@ -104,5 +116,64 @@ class profileDataController extends Controller
         }
         return redirect()->route('show');
     }
+
+    function loginPage() {
+        return view('login',['slot'=>'login', 'mess' => '']);
+    }
+
+    function login(Request $request) {
+        Session::flash('email', $request->email);
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            Session::flash('user', $request->email);
+            Session::flash('mess', 'Login Berhasil');
+            return redirect()->intended('/');
+        }
+        Session::flash('mess', 'Login Gagal');
+        
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+        // ->onlyInput('email');
+
+
+        // // dd($pair);
+        // $mess = "";
+        // $user = User::findE($pair->email);
+        // if ($user == null) {
+        //     $mess = 'No User Found';
+        //     return view('login',['slot'=>'login', 'mess' => $mess]);
+        // }
+        // else {
+        //     if ($user->password == $pair->password) {
+        //         $mess = "berhasil";
+        //         // dd($user);
+        //         return redirect()->route('show', $user);
+        //     }else {
+        //         $mess = "Password salah";
+        //     return view('login',['slot'=>'login', 'mess' => $mess]);
+        //     }
+        // }
+
+
+    }
+
+    
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+     
+        $request->session()->invalidate();
+     
+        $request->session()->regenerateToken();
+     
+        return redirect('/');
+    }
+
 
 }

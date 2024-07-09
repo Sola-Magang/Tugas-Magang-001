@@ -9,11 +9,11 @@
                         <form class="space-y-4 md:space-y-2" action="{{ route('pd.submit') }}" method="post"> @csrf
                             <div>
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                <input type="text" name="name" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nama Kalian" required="">
+                                <input type="text" name="name" id="name" class="input-add-edit" placeholder="Nama Kalian" required="">
                             </div>
                             <div>
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Posisi</label>
-                                <select name="category" id="category" placeholder="" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <select name="category" id="category" placeholder="" class="input-add-edit" required="">
                                     @foreach ($category as $cat)
                                         <option value="{{ $cat->id }}">{{ $cat->pos_name }}</option>
                                     @endforeach
@@ -21,19 +21,19 @@
                             </div>
                             <div>
                                 <label for="place_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tempat Lahir</label>
-                                <input type="text" name="place_birth" id="place_birth" placeholder="Kota/Kabupaten" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <input type="text" name="place_birth" id="place_birth" placeholder="Kota/Kabupaten" class="input-add-edit" required="">
                             </div>
                             <div>
                                 <label for="date_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Lahir</label>
-                                <input type="date" name="date_birth" id="date_birth" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <input type="date" name="date_birth" id="date_birth" class="input-add-edit" required="">
                             </div>
                             <div>
                                 <label for="school" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal Sekolah</label>
-                                <input type="text" name="school" id="school" placeholder="SMA/K/P..." class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <input disabled type="text" name="school" id="school" placeholder="SMA/K/P..." class="input-add-edit" value="{{ Auth::user()->school_name }}">
                             </div>
                             <div>
                                 <label for="information" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
-                                <textarea required="" name="information" id="information" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                <textarea required="" name="information" id="information" class="input-add-edit"></textarea>
                             </div>
                             <div class="flex justify-between">
                                 <a href="\" class="max-w-md text-white bg-gray-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-primary-600 dark:hover:bg-red-600 dark:focus:ring-primary-800 transition-colors">Batal</a>

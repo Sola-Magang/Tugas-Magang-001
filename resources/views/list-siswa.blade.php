@@ -40,7 +40,7 @@
 
                     @forelse ($students as $student)
                         <article class="grid p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                            <input type="checkbox" name="list[]" id="list" value="{{ $student->slug }}">
+                            <input type="checkbox" name="list[]" id="list" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-0 dark:bg-gray-700 dark:border-gray-600" value="{{ $student->slug }}">
                             
                             <div class="flex justify-between items-center mb-5 text-gray-500">
                                 <a href="/?category={{ $student->pos->slug }}">
@@ -50,13 +50,8 @@
                                 </a>
                                 <span class="text-sm">{{ $student->created_at->diffForHumans() }}</span>
                             </div>
-                            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">Data siswa </a></h2>
+                            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $student['name'] }}</h2>
                             <table>
-                                <tr>
-                                    <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Nama</td>
-                                    <td>:</td>
-                                    <td>{{ $student['name'] }}</td>
-                                </tr>
                                 <tr>
                                     <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Tempat Tanggal Lahir</td>
                                     <td>:</td>
@@ -66,7 +61,6 @@
                                     <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Sekolah</td>
                                     <td>:</td>
                                     <td>{{ $student->sekolah->name}}</td>
-                                    {{-- <td>{{ $student->sekolah ? $student->sekolah->name : 'N/A' }}</td> --}}
                                 </tr>
                                 <tr>
                                     <td class="mb-5 font-black text-gray-600 dark:text-gray-400">Keterangan</td>

@@ -22,11 +22,12 @@ class profileDataController extends Controller
         $data->slug = Str::slug($pd->name) . rand(1,100);
         $data->place_birth = $pd->place_birth;
         $data->date_birth = $pd->date_birth;
-        $data->school = $pd->school;
+        $data->user_id = Auth::user()->id;
         $data->information = $pd->information;
 
         $data->save();
 
+        Session::flash('mess','Berhasil menambahkan data');
         return redirect()->route('show');
     }
 
@@ -37,11 +38,12 @@ class profileDataController extends Controller
         $data->slug = Str::slug($pd->name);
         $data->place_birth = $pd->place_birth;
         $data->date_birth = $pd->date_birth;
-        $data->school = $pd->school;
+        $data->user_id = Auth::user()->id;
         $data->information = $pd->information;
 
         $data->update();
 
+        Session::flash('mess','Berhasil mengedit data ' . $pd->name);
         return redirect()->route('show');
     }
 

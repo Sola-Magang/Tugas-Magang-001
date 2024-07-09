@@ -27,7 +27,7 @@ Route::get('/login', [linkController::class, 'loginPage'])->name('pg.login')->mi
 
 Route::post('/login',[profileDataController::class, 'login'])->name('login');
 
-Route::get('/register', [linkController::class, 'register'])->name('pg.register')->middleware('auth');
+Route::get('/register', [linkController::class, 'register'])->name('pg.register')->middleware('guest');
 
 Route::post('/regist', [profileDataController::class, 'regist'])->name('regist');
 

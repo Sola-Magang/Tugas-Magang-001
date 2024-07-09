@@ -8,39 +8,12 @@ use App\Models\profileData;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class profileDataController extends Controller
 {
-    function show(User $data) {
-        // if (Session::get('status') != 'login' ) {
-        //     return redirect()->route('login');
-        // }
-
-
-        $data = User::findE(Session::get('user'));
-        // $data = Session::get('user');
-        // dd($data);
-        return view(
-            'list-siswa',
-            ['title' => 'Daftar Siswa', 
-            'school' => 'SMK Harapan',
-            'user' => $data, 
-            'students' => profileData::with('pos')->filter(request(['search','category']))->get()]
-        );
-    }
-
-    function add()
-    {
-        $category = category::all();
-        return view(
-            'add-data',
-            compact('category'),
-            ['title'=>'Tambah Data']
-        );
-    }
-
     function submit(Request $pd)
     {
         $data = new profileData();
@@ -55,16 +28,6 @@ class profileDataController extends Controller
         $data->save();
 
         return redirect()->route('show');
-    }
-
-    function edit($slug){
-        $category = category::all();
-        $data = profileData::where('slug', '=', $slug)->first();
-        return view(
-            'edit', 
-            compact('data','category'), 
-            ['title'=>'Edit']
-        );
     }
 
     function update(Request $pd, $slug){
@@ -117,15 +80,11 @@ class profileDataController extends Controller
         return redirect()->route('show');
     }
 
-    function loginPage() {
-        return view('login',['slot'=>'login', 'mess' => '']);
-    }
-
     function login(Request $request) {
         Session::flash('email', $request->email);
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => ['required', 'email:dns'],
+            'password' => ['required', 'min:8'],
         ]);
  
         if (Auth::attempt($credentials)) {
@@ -134,33 +93,13 @@ class profileDataController extends Controller
             Session::flash('mess', 'Login Berhasil');
             return redirect()->intended('/');
         }
+        
         Session::flash('mess', 'Login Gagal');
         
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
+            'mess' => 'login gagal'
         ])->onlyInput('email');
-        // ->onlyInput('email');
-
-
-        // // dd($pair);
-        // $mess = "";
-        // $user = User::findE($pair->email);
-        // if ($user == null) {
-        //     $mess = 'No User Found';
-        //     return view('login',['slot'=>'login', 'mess' => $mess]);
-        // }
-        // else {
-        //     if ($user->password == $pair->password) {
-        //         $mess = "berhasil";
-        //         // dd($user);
-        //         return redirect()->route('show', $user);
-        //     }else {
-        //         $mess = "Password salah";
-        //     return view('login',['slot'=>'login', 'mess' => $mess]);
-        //     }
-        // }
-
-
     }
 
     
@@ -175,5 +114,22 @@ class profileDataController extends Controller
         return redirect('/');
     }
 
+    function regist(Request $rq){
+        $store = $rq->validate([
+            'name'=> ['required','max:255', 'min:5'],
+            'email'=> ['required', 'email:dns', 'unique:users,email'],
+            'password' => ['required', 'min:8']
+        ]);
+        $store['remember_token'] = Str::random(10);
+        // $store['email_verified_at'] = now();
+
+        $store['password'] = Hash::make($store['password']);
+        // dd($store);
+        User::create($store);
+
+        Session::flash('mess', 'Berhasil Registrasi');
+        Session::flash('email', $store['email']);
+        return redirect('/login');
+    }
 
 }

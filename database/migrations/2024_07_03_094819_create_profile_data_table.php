@@ -21,7 +21,11 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('place_birth');
             $table->datetime('date_birth');
-            $table->string('school');
+            // $table->string('school');
+            $table->foreignId('user_id')->constrained(
+                table: 'users',
+                indexName: 'i_school'
+            );
             $table->text('information');
             $table->timestamps();
         });

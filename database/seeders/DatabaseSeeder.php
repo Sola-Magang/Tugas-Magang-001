@@ -23,10 +23,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 
-        $this->call(CategorySeeder::class);
+        $this->call([CategorySeeder::class, Userseeder::class]);
 
         profileData::factory(100)->recycle([
-            category::all()
+            category::all(),
+            User::all()
         ])->create();
     }
 }

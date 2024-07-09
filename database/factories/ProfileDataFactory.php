@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\category;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,7 +29,10 @@ class ProfileDataFactory extends Factory
             'slug' => Str::slug(fake()->name()) . rand(1,100),
             'place_birth'=>fake()->city(),
             'date_birth'=>fake()->date('Y-m-d'),
-            'school'=>'SMK Harapan',
+            // 'school'=>'SMK Harapan',
+            'user_id' => function(){
+                return User::inRandomOrder()->first()->id;
+            },
             'information'=>fake()->sentence(6)
         ];
     }

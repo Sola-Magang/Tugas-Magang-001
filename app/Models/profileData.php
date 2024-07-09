@@ -35,4 +35,8 @@ class profileData extends Model
     public function pos(): BelongsTo{
         return $this->belongsTo(category::class);
     }
+
+    public function sekolah(): BelongsTo {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

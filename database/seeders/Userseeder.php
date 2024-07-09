@@ -16,6 +16,7 @@ class Userseeder extends Seeder
     {
         User::create([
             'name' => 'SMK Harapan',
+            'school_name' => 'SMK Harapan',
             'email' => 'harapan@smk.negeri',
             'password' => 'admin123.',
             'email_verified_at' => now(),
@@ -23,7 +24,8 @@ class Userseeder extends Seeder
         ]);
         User::create([
             'name' => 'SMK Tunas',
-            'email' => 'Tunas@smk.negeri',
+            'school_name' => 'SMK Tunas',
+            'email' => 'tunas@smk.negeri',
             'password' => 'admin123.',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
